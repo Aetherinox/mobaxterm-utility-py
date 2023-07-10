@@ -33,7 +33,8 @@ import os
 import zipfile
 ```
 - Open Windows Terminal / Command Prompt and execute `pip install pyinstaller`
-- Execute `pyinstaller -Fw xtgen.py`
+- Execute `pyinstaller -Fwc xtgen.py`
+  > If you do not add `c` to the list of arguments, the exe will output nothing to console.
 - New .exe will be placed in `x:\IronPython\3.4.0\dist\xtgen.exe`
 
 # Notes
