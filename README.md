@@ -1,5 +1,21 @@
 # MobaXtermKeygen-Python
 
+# Usage
+```
+xtgen.exe [name@req] [version@opt] [users@opt]
+```
+
+| Arg | Desc | State | Default |
+|-|-| - | - |
+| **user** | Username for license | required | |
+| **version** | Version license to be generated for | optional | 23.2 |
+| **users** | Number of users allowed for license | optional | 1 |
+
+# Example:
+```
+xtgen.exe "Aetherx" 23.2 4
+```
+
 # Compile
 - Download [IronPython 3.x](https://github.com/IronLanguages/ironpython3/releases) and install to `x:\IronPython\3.4.0`
 - Copy `xtgen.py` and place in same directory where ipy.exe exists
