@@ -18,8 +18,8 @@ xtgen.exe "Aetherx" 23.2 4
 
 # Compile
 - Download [IronPython 3.x](https://github.com/IronLanguages/ironpython3/releases) and install to `x:\IronPython\3.4.0`
-- Copy `xtgen.py` and place in same directory where ipy.exe exists
-- Open xtgen.py and modify the header:
+- Copy `xtgen.py` and place in same directory where `ipy.exe` exists
+- Open `xtgen.py` and modify the header:
 ```
 import sys
 sys.path.append("Lib")
@@ -30,3 +30,9 @@ import zipfile
 - Open Windows Terminal / Command Prompt and execute `pip install pyinstaller`
 - Execute `pyinstaller -Fw xtgen.py`
 - New .exe will be placed in `x:\IronPython\3.4.0\dist\xtgen.exe`
+
+# Notes
+Does not support IronPython 2.x; will return errors:
+```
+SyntaxError: unexpected token ':'
+```
