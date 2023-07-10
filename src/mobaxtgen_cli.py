@@ -225,7 +225,6 @@ _dict = { i : _b64Str [i] for i, v in enumerate(_b64Str) }
 #
 
 def Encode(byteString : bytes):
-    print( byteString )
     res = b''
 
     # divmod( dividend / divisor )
