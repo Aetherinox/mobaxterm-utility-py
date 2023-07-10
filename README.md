@@ -1,6 +1,6 @@
 # MobaXtermKeygen-Python
 
-# Usage
+## Usage
 ### Binary
 ```
 xtgen.exe [name@req] [version@opt] [users@opt]
@@ -16,12 +16,12 @@ xtgen.py [name@req] [version@opt] [users@opt]
 | **version** | Version license to be generated for | optional | 23.2 |
 | **users** | Number of users allowed for license | optional | 1 |
 
-# Example:
+## Example:
 ```
 xtgen.exe "Aetherx" 23.2 4
 ```
 
-# Compile Binary
+## Compile Binary
 - Download [IronPython 3.x](https://github.com/IronLanguages/ironpython3/releases) and install to `x:\IronPython\3.4.0`
 - Copy `xtgen.py` and place in same directory where `ipy.exe` exists
 - Open `xtgen.py` and modify the header:
@@ -33,14 +33,17 @@ import os
 import zipfile
 ```
 - Open Windows Terminal / Command Prompt and execute `pip install pyinstaller`
-- Execute `pyinstaller -Fwc xtgen.py`
+- Execute the following command in terminal:
+```
+pyinstaller -Fwc xtgen.py --version-file=verinfo.py
+```
   > If you do not add `c` to the list of arguments, the exe will output nothing to console.
 - New .exe will be placed in `x:\IronPython\3.4.0\dist\xtgen.exe`
 
 # Todo
 May add argument parser later. The script is pretty simple, no need to complicate it.
 
-# Notes
+## Notes
 - Does not support IronPython 2.x; will return errors:
 ```
 SyntaxError: unexpected token ':'
