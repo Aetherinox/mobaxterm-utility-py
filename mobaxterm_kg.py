@@ -4,9 +4,12 @@
 #   includes
 #
 
-import os
 import sys
+sys.path.append("Lib")
+
+import os
 import zipfile
+# import argparse
 
 #
 #   vars
@@ -19,6 +22,26 @@ __path__                    = os.path.join(os.getcwd( ), __output__)
 __desc__                    = """A license generator for MobaXterm."""
 __version_info__            = ( '1', '0', '0', '0' )
 __version__                 = '.'.join(__version_info__)
+__bFlag__                   = False
+
+#
+#   arg parsing
+#
+#   may add this later. right now the script is simple and works great.
+#   if you want to add it, have at it.
+#
+
+#   parser  = argparse.ArgumentParser( prog=__py__, description=__desc__, epilog=__version__)
+#   group   = parser.add_mutually_exclusive_group()
+#
+#   group.add_argument("-s", "--simple", help="show simple output", action="store_true")
+#   group.add_argument("-u", "--usage", help="helpful usage examples", action="store_true")
+
+#   parser.add_argument("name", type=str, help="name of user", required=True)
+#   parser.add_argument("version", type=int, help="version of mobaxterm running")
+#   parser.add_argument("users", type=int, help="Number of users license is good for")
+
+#   args = parser.parse_args()
 
 #
 #   Help
@@ -32,9 +55,14 @@ def About( ):
     print( __desc__ )
     print( '-------------------------------------------------------------' )
     print( )
-    print( 'Syntax:')
+    print( 'Usage:')
     print( )
-    print( '    %s [name|req] [version|opt] [count|opt]' % __py__ )
+    print( '    %s [OPTIONS] [ARGS]' % __py__ )
+    print( )
+    print( 'Options:')
+    print( )
+    print( '    -h ............. show this help message' )
+    print( '    -s ............. output simple license key instead of full details' )
     print( )
     print( 'Arguments:')
     print( )
@@ -49,13 +77,39 @@ def About( ):
     print( '                     Example:    2' )
     print( )
     print( 'Example:')
-    print( '    %s Aetherx 23.2 2         ..... v23.2 - 2 users' % __py__ )
-    print( '    %s Aetherx 23.2           ..... v23.2 - 1 user' % __py__ )
-    print( '    %s "Aetherx" 23.2 2       ..... v23.2 - 1 user' % __py__ )
-    print( '    %s "Aetherx" "23.2" "2"   ..... v23.2 - 1 user' % __py__ )
+    print(  )
+    print( '    You can use any of the following examples below to format your command:' )
+    print(  )
+    print( '    %s Aetherx 23.2 2            ..... v23.2 - 2 users' % __py__ )
+    print( '    %s Aetherx 23.2              ..... v23.2 - 1 user' % __py__ )
+    print( '    %s "Aetherx" 23.2 2          ..... v23.2 - 2 users' % __py__ )
+    print( '    %s "Aetherx" "23.2" "5"      ..... v23.2 - 5 users' % __py__ )
+    print( '    %s -s "Aetherx" "23.2" "1"   ..... v23.2 - 1 user - simple output' % __py__ )
     print( )
     print( )
     sys.exit( 0 )
+
+#
+#   arg > options
+#
+#   better ways of doing dynamic arguments counts but since we'll never
+#   need that. quick solution.
+#
+#   possibly later to add ( argument parse )
+#   If you want to add this yourself, go for it
+#       import argparse
+#       parser = argparse.ArgumentParser()
+#
+
+if sys.argv[ 1 ].startswith('-'):
+    __bFlag__ = True
+
+#
+#   argument > command information
+#
+
+if __bFlag__ and sys.argv[ 1 ].startswith('-h'):
+    About()
 
 #
 #   arg1 / name
@@ -65,8 +119,12 @@ def About( ):
 try:
     name
 except NameError:
-    if len( sys.argv ) > 1:
-        name = sys.argv[ 1 ]
+    pos = 1
+    if __bFlag__:
+        pos = 2
+
+    if len( sys.argv ) > pos:
+        name = sys.argv[ pos ]
     else:
         print( 'Missing arguments -- provide a name' )
         sys.exit( 0 )
@@ -79,13 +137,14 @@ except NameError:
 try:
     ver
 except NameError:
-    if len( sys.argv ) > 2:
-        ver = sys.argv[ 2 ]
+    pos = 2
+    if __bFlag__:
+        pos = 3
+
+    if len( sys.argv ) > pos:
+        ver = sys.argv[ pos ]
     else:
-        if name == "-h":
-            About( )
-        else:
-            ver = "23.2"
+        ver = "23.2"
 
 #
 #   arg3 / users
@@ -96,8 +155,12 @@ except NameError:
 try:
     users
 except NameError:
-    if len( sys.argv ) > 3:
-        users = int( sys.argv[ 3 ] )
+    pos = 3
+    if __bFlag__:
+        pos = 4
+
+    if len( sys.argv ) > pos:
+        users = int( sys.argv[ pos ] )
     else:
         users = int(1)
 
@@ -125,7 +188,7 @@ _b64Str  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 #       8: 'I',     9: 'J',     10: 'K',    11: 'L',
 #       12: 'M',    13: 'N',    14: 'O',    15: 'P',
 #       16: 'Q',    17: 'R',    18: 'S',    19: 'T',
-#       20:'U',     21: 'V',    22: 'W',    23: 'X',
+#       20: 'U',    21: 'V',    22: 'W',    23: 'X',
 #       24: 'Y',    25: 'Z',    26: 'a',    27: 'b',
 #       28: 'c',    29: 'd',    30: 'e',    31: 'f',
 #       32: 'g',    33: 'h',    34: 'i',    35: 'j',
@@ -142,14 +205,13 @@ _b64Str  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
 _dict = { i : _b64Str [i] for i, v in enumerate(_b64Str) }
 
-if name == "-h":
-    About()
-
 #
 #   base64 > encode
+#       byteString  :   b'6k\t-< -:04z{zkykz{{z~zkxkxkxk'       (Aetherx)
 #
 
 def Encode(byteString : bytes):
+    print( byteString )
     res = b''
 
     # divmod( dividend / divisor )
@@ -183,14 +245,22 @@ def Encode(byteString : bytes):
 
 #
 #   base64 > encrypt
-#       Encode -> Encrypt
+#       key         :   1927
+#       byteString  :   b'1#Aetherx|232#1#233262#0#0#0#'
 #
 
 def Encrypt( key : int, byteString : bytes ):
+    # bytearray(b'')
     res = bytearray( )
-    for i, v in enumerate( byteString  ):
+
+    for i, v in enumerate( byteString ):
         res.append(byteString[i] ^ ((key >> 8) & 0xff))
         key = res[ -1 ] & key | 0x482D
+
+    # b'6'
+    # b'6k'
+    # ....
+    # b'6k\t-< -:04z{zkykz{{z~zkxkxkxk'
     return bytes( res )
 
 #
@@ -243,6 +313,13 @@ else:
     v_license_users         = users
     v_license_ver           = ver
 
+#
+#   Output > Full
+#
+#   Show all information related to license generation.
+#
+
+def OutputFull():
     #   Output to console
     print( )
     print()
@@ -254,3 +331,21 @@ else:
     print( 'Users ....................: %s' % v_license_users )
     print( )
     print( )
+
+#
+#   Output > Simple
+#
+#   Only show encrypted license key used in license file.
+#
+
+def OutputSimple():
+    print( v_license_enc )
+
+#
+#   Determine output
+#
+
+if __bFlag__ and sys.argv[ 1 ].startswith('-s'):
+    OutputSimple()
+else:
+    OutputFull()

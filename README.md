@@ -37,6 +37,9 @@ import zipfile
   > If you do not add `c` to the list of arguments, the exe will output nothing to console.
 - New .exe will be placed in `x:\IronPython\3.4.0\dist\xtgen.exe`
 
+# Todo
+May add argument parser later. The script is pretty simple, no need to complicate it.
+
 # Notes
 - Does not support IronPython 2.x; will return errors:
 ```
