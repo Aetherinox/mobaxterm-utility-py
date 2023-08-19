@@ -65,27 +65,19 @@ Output:
 ## Compile Binary
 
 - Download [IronPython 3.x](https://github.com/IronLanguages/ironpython3/releases) and install to `x:\IronPython\3.4.0`
-- Copy `xtgen.py` and place in same directory where `ipy.exe` exists
-- Open `xtgen.py` and modify the header:
-
-```py
-import sys
-sys.path.append("Lib")
-
-import os
-import zipfile
-```
-
+- Copy `mobaxtgen_cli.py` and place in same directory where `ipy.exe` exists
+- Copy `verinfo.py` and place in same directory where `mobaxtgen_cli.py` exists
+- Open `verinfo.py` and modify the data:
 - Open Windows Terminal / Command Prompt and execute `pip install pyinstaller`
 - Execute the following command in terminal:
 
 ```bash
-pyinstaller -Fwc xtgen.py --version-file=verinfo.py
+pyinstaller -Fwc mobaxtgen_cli.py --version-file=verinfo.py
 ```
 
 > If you do not add `c` to the list of arguments, the exe will output nothing to console.
 
-- New .exe will be placed in `x:\IronPython\3.4.0\dist\xtgen.exe`
+- New .exe will be placed in `x:\IronPython\3.4.0\dist\mobaxtgen_cli.exe`
 
 # Todo
 
