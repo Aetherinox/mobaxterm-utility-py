@@ -2,8 +2,8 @@
 #   @author     : Aetherinox
 #   @name       : mobaxterm keygen cli
 #   @desc       : stand-alone exe for generating xmobaterm license keys
-#   @update     : 07.10.23
-#   @url        : https://github.com/Aetherinox/MobaXtermKeygen-Python
+#   @update     : 01.07.24
+#   @url        : https://github.com/Aetherinox/MobaXtermKG-python
 #
 
 #/usr/bin/env python3
@@ -32,7 +32,7 @@ __output__                  = "Custom.mxtpro"
 __update__                  = datetime( 2023, 7, 10, 0, 0, 0, 0 )
 __py__                      = os.path.basename(__file__)
 __path__                    = os.path.join(os.getcwd( ), __output__)
-__version_info__            = ( '1', '0', '0', '0' )
+__version_info__            = ( '1', '1', '0', '0' )
 __version__                 = '.'.join(__version_info__)
 __bFlag__                   = False
 
@@ -83,8 +83,8 @@ def About( ):
     print( '    name ........... Name of user license belongs to.' )
     print( )
     print( '    version ........ Version of MobaXterm running.' )
-    print( '                     Example:    23.2' )
-    print( '                     Default:    23.2' )
+    print( '                     Example:    23.6' )
+    print( '                     Default:    23.6' )
     print( )
     print( '    count .......... Number of user licenses.' )
     print( '                     Default:    1' )
@@ -94,11 +94,11 @@ def About( ):
     print(  )
     print( '    You can use any of the following examples below to format your command:' )
     print(  )
-    print( '    %s Aetherx 23.2 2            ..... v23.2 - 2 users' % __py__ )
-    print( '    %s Aetherx 23.2              ..... v23.2 - 1 user' % __py__ )
-    print( '    %s "Aetherx" 23.2 2          ..... v23.2 - 2 users' % __py__ )
-    print( '    %s "Aetherx" "23.2" "5"      ..... v23.2 - 5 users' % __py__ )
-    print( '    %s -s "Aetherx" "23.2" "1"   ..... v23.2 - 1 user - simple output' % __py__ )
+    print( '    %s Aetherx 23.6 2            ..... v23.6 - 2 users' % __py__ )
+    print( '    %s Aetherx 23.6              ..... v23.6 - 1 user' % __py__ )
+    print( '    %s "Aetherx" 23.6 2          ..... v23.6 - 2 users' % __py__ )
+    print( '    %s "Aetherx" "23.6" "5"      ..... v23.6 - 5 users' % __py__ )
+    print( '    %s -s "Aetherx" "23.6" "1"   ..... v23.6 - 1 user - simple output' % __py__ )
     print( )
     print( )
     sys.exit( 0 )
@@ -145,7 +145,7 @@ except NameError:
 
 #
 #   arg2 / version
-#       Example:    23.2
+#       Example:    23.6
 #
 
 try:
@@ -158,7 +158,7 @@ except NameError:
     if len( sys.argv ) > pos:
         ver = sys.argv[ pos ]
     else:
-        ver = "23.2"
+        ver = "23.6"
 
 #
 #   arg3 / users
