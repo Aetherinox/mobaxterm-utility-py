@@ -104,6 +104,13 @@ def About( ):
     sys.exit( 0 )
 
 #
+#   argument > none provided
+#
+
+if len(sys.argv) <= 1:
+    About()
+
+#
 #   arg > options
 #
 #   better ways of doing dynamic arguments counts but since we'll never
@@ -309,6 +316,9 @@ def GenLicense(license : LicenseType, users : int, username : str, ver_major : i
 if not name or not ver:
     print('Fatal Error: Not enough arguments')
 else:
+
+    if not '.' in ver:
+        ver = "%s%s" % ( ver, ".0" )
 
     #   version structure
     ver_major, ver_minor    = ver.split( '.' )[ 0:2 ]
