@@ -53,7 +53,7 @@ Users ....................: 4
 Generate + return simple result
 
 ```bash
-$ mobaxtgen_cli.exe -s "Aetherx" 23.2 4
+$ mobaxtgen_cli.exe -s "Aetherx" 23.6 4
 ```
 
 Output:
