@@ -1,0 +1,81 @@
+{
+    "name": "@aetherinox/mobaxterm-py",
+    "version": "1.1.0",
+    "description": "A license utility for Mobaxterm",
+    "homepage": "https://github.com/Aetherinox/mobaxterm-utility-py",
+    "author": "Aetherinox <118329232+Aetherinox@users.noreply.github.com>",
+    "license": "MIT",
+    "contributors": [
+        {
+            "name": "Aetherinox",
+            "email": "118329232+Aetherinox@users.noreply.github.com",
+            "url": "https://github.com/Aetherinox"
+        },
+        {
+            "name": "EuropaServ",
+            "email": "161414668+EuropaServ@users.noreply.github.com",
+            "url": "https://github.com/EuropaServ"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Aetherinox/mobaxterm-utility-py.git"
+    },
+    "bugs": {
+        "url": "https://github.com/Aetherinox/mobaxterm-utility-py/issues"
+    },
+    "build": {
+        "appId": "com.mobaxterm-utility-py.id"
+    },
+    "funding": [
+        {
+            "type": "individual",
+            "url": "https://buymeacoffee.com/aetherinox"
+        }
+    ],
+    "keywords": [
+        "mobaxterm",
+        "python",
+        "license",
+        "utility"
+    ],
+    "scripts": {
+        "pretest": "npm run lint",
+        "lint": "eslint src/**/*.ts",
+        "lint:fix": "eslint --fix src/**/*.ts",
+        "pretty": "prettier . --check",
+        "pretty:fix": "prettier . --write",
+        "pretty:ignore": "prettier . --write --ignore-unknown",
+        "contrib:add": "all-contributors add",
+        "contrib:generate": "all-contributors generate",
+        "release": "node release.js",
+        "release:generate": "node release.js generate",
+        "env:release": "npx --quiet env-cmd --no-override node release.js",
+        "env:uuid": "npx --quiet env-cmd --no-override node release.js uuid",
+        "env:guid": "npx --quiet env-cmd --no-override node release.js guid",
+        "env:version": "node -p require('./package.json').version;"
+    },
+    "devDependencies": {
+        "eslint-plugin-prettier": "^5.2.1",
+        "typescript-eslint": "^7.16.1",
+        "@typescript-eslint/parser": "^7.16.1",
+        "@typescript-eslint/eslint-plugin": "^7.16.1",
+        "@stylistic/eslint-plugin-js": "^2.3.0",
+        "@stylistic/eslint-plugin-ts": "^2.3.0",
+        "@stylistic/eslint-plugin-plus": "^2.3.0",
+        "prettier": "^3.3.3",
+        "@rollup/plugin-commonjs": "^26.0.1",
+        "@rollup/plugin-image": "^3.0.3",
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-replace": "^5.0.7",
+        "@rollup/plugin-terser": "^0.4.4",
+        "@rollup/plugin-typescript": "^11.1.6",
+        "rollup-plugin-license": "^3.5.2",
+        "@types/semver": "^7.5.8",
+        "@types/uuid": "^10.0.0",
+        "rollup": "^4.18.1",
+        "semver": "^7.6.3",
+        "uuid": "^10.0.0",
+        "all-contributors-cli": "^6.26.1"
+    }
+}
