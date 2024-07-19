@@ -1,16 +1,16 @@
-#
-#   @author     : Aetherinox
+# # #
 #   @name       : mobaxterm keygen cli
 #   @desc       : stand-alone exe for generating xmobaterm license keys
-#   @update     : 01.07.24
-#   @url        : https://github.com/Aetherinox/MobaXtermKG-python
-#
+#   @author     : Aetherinox
+#   @update     : 07.18.24
+#   @url        : https://github.com/Aetherinox/mobaxterm-utility-py
+# # #
 
 #/usr/bin/env python3
 
-#
+# # #
 #   includes
-#
+# # #
 
 import sys
 sys.path.append("Lib")
@@ -21,43 +21,43 @@ import os
 import zipfile
 # import argparse
 
-#
+# # #
 #   vars
-#
+# # #
 
 __script__                  = "MobaXterm Generator"
 __author__                  = "Aetherx (Aetherinox)"
 __desc__                    = """A license generator for MobaXterm"""
 __output__                  = "Custom.mxtpro"
-__update__                  = datetime( 2023, 7, 10, 0, 0, 0, 0 )
+__update__                  = datetime( 2024, 7, 18, 0, 0, 0, 0 )
 __py__                      = os.path.basename(__file__)
 __path__                    = os.path.join(os.getcwd( ), __output__)
-__version_info__            = ( '1', '1', '0', '0' )
+__version_info__            = ( '1', '2', '0', '0' )
 __version__                 = '.'.join(__version_info__)
 __bFlag__                   = False
 
-#
+# # #
 #   arg parsing
 #
 #   may add this later. right now the script is simple and works great.
 #   if you want to add it, have at it.
 #
-
 #   parser  = argparse.ArgumentParser( prog=__py__, description=__desc__, epilog=__version__)
 #   group   = parser.add_mutually_exclusive_group()
 #
 #   group.add_argument("-s", "--simple", help="show simple output", action="store_true")
 #   group.add_argument("-u", "--usage", help="helpful usage examples", action="store_true")
-
+#
 #   parser.add_argument("name", type=str, help="name of user", required=True)
 #   parser.add_argument("version", type=int, help="version of mobaxterm running")
 #   parser.add_argument("users", type=int, help="Number of users license is good for")
-
+#
 #   args = parser.parse_args()
+# # #
 
-#
+# # #
 #   Help
-#
+# # #
 
 def About( ):
     print( )
@@ -83,8 +83,8 @@ def About( ):
     print( '    name ........... Name of user license belongs to.' )
     print( )
     print( '    version ........ Version of MobaXterm running.' )
-    print( '                     Example:    23.6' )
-    print( '                     Default:    23.6' )
+    print( '                     Example:    24.2' )
+    print( '                     Default:    24.2' )
     print( )
     print( '    count .......... Number of user licenses.' )
     print( '                     Default:    1' )
@@ -94,23 +94,23 @@ def About( ):
     print(  )
     print( '    You can use any of the following examples below to format your command:' )
     print(  )
-    print( '    %s Aetherx 23.6 2            ..... v23.6 - 2 users' % __py__ )
-    print( '    %s Aetherx 23.6              ..... v23.6 - 1 user' % __py__ )
-    print( '    %s "Aetherx" 23.6 2          ..... v23.6 - 2 users' % __py__ )
-    print( '    %s "Aetherx" "23.6" "5"      ..... v23.6 - 5 users' % __py__ )
-    print( '    %s -s "Aetherx" "23.6" "1"   ..... v23.6 - 1 user - simple output' % __py__ )
+    print( '    %s Aetherx 24.2 2            ..... v24.2 - 2 users' % __py__ )
+    print( '    %s Aetherx 24.2              ..... v24.2 - 1 user' % __py__ )
+    print( '    %s "Aetherx" 24.2 2          ..... v24.2 - 2 users' % __py__ )
+    print( '    %s "Aetherx" "24.2" "5"      ..... v24.2 - 5 users' % __py__ )
+    print( '    %s -s "Aetherx" "24.2" "1"   ..... v24.2 - 1 user - simple output' % __py__ )
     print( )
     print( )
     sys.exit( 0 )
 
-#
+# # #
 #   argument > none provided
-#
+# # #
 
 if len(sys.argv) <= 1:
     About()
 
-#
+# # #
 #   arg > options
 #
 #   better ways of doing dynamic arguments counts but since we'll never
@@ -120,22 +120,22 @@ if len(sys.argv) <= 1:
 #   If you want to add this yourself, go for it
 #       import argparse
 #       parser = argparse.ArgumentParser()
-#
+# # #
 
 if sys.argv[ 1 ].startswith('-'):
     __bFlag__ = True
 
-#
+# # #
 #   argument > command information
-#
+# # #
 
 if __bFlag__ and sys.argv[ 1 ].startswith('-h'):
     About()
 
-#
+# # #
 #   arg1 / name
 #       Example:    Aetherx
-#
+# # #
 
 try:
     name
@@ -150,10 +150,10 @@ except NameError:
         print( 'Missing arguments -- provide a name' )
         sys.exit( 0 )
 
-#
+# # #
 #   arg2 / version
-#       Example:    23.6
-#
+#       Example:    24.2
+# # #
 
 try:
     ver
@@ -165,13 +165,13 @@ except NameError:
     if len( sys.argv ) > pos:
         ver = sys.argv[ pos ]
     else:
-        ver = "23.6"
+        ver = "24.2"
 
-#
+# # #
 #   arg3 / users
 #       Example:    5
 #       Default:    1
-#
+# # #
 
 try:
     users
@@ -185,23 +185,23 @@ except NameError:
     else:
         users = int(1)
 
-#
+# # #
 #   License Types
 #       Don't change ENUMs, these are programmed in mobaxterm
-#
+# # #
 
 class LicenseType:
     Professional    = 1
     Educational     = 3
     Persional       = 4
 
-#
+# # #
 #   base64 alphabet
-#
+# # #
 
 _b64Str  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 
-#
+# # #
 #   dictionary
 #   {
 #       0: 'A',     1: 'B',     2: 'C',     3: 'D',
@@ -222,14 +222,14 @@ _b64Str  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
 #       60: '8',    61: '9',    62: '+',    63: '/',
 #       64: '='
 #   }
-#
+# # #
 
 _dict = { i : _b64Str [i] for i, v in enumerate(_b64Str) }
 
-#
+# # #
 #   base64 > encode
 #       byteString  :   b'6k\t-< -:04z{zkykz{{z~zkxkxkxk'       (Aetherx)
-#
+# # #
 
 def Encode(byteString : bytes):
     res = b''
@@ -263,11 +263,11 @@ def Encode(byteString : bytes):
 
         return res
 
-#
+# # #
 #   base64 > encrypt
 #       key         :   1927
 #       byteString  :   b'1#Aetherx|232#1#233262#0#0#0#'
-#
+# # #
 
 def Encrypt( key : int, byteString : bytes ):
     # bytearray(b'')
@@ -283,13 +283,14 @@ def Encrypt( key : int, byteString : bytes ):
     # b'6k\t-< -:04z{zkykz{{z~zkxkxkxk'
     return bytes( res )
 
-#
+# # #
 #   Generate License
-#
+# # #
 
 def GenLicense(license : LicenseType, users : int, username : str, ver_major : int, ver_minor):
     assert( users >= 0 )
 
+    # # #
     #   License String
     #
     #   1#aetherx|232#99#233262#0#0#0#
@@ -304,6 +305,7 @@ def GenLicense(license : LicenseType, users : int, username : str, ver_major : i
     #       7 : 0
     #
     #   Structure:  license_type # username | ver_major ver_minor # users # ver_major 3 ver_minor 6 ver_minor # 0 # 0 # 0 #
+    # # #
 
     lic_str         = '%d#%s|%d%d#%d#%d3%d6%d#%d#%d#%d#' % (license, username, ver_major, ver_minor, users, ver_major, ver_minor, ver_minor, 0, 0, 0)
     lic_enc         = Encode(Encrypt(0x787, lic_str.encode( ))).decode( )
@@ -336,11 +338,11 @@ else:
     v_license_users         = users
     v_license_ver           = ver
 
-#
+# # #
 #   Output > Full
 #
 #   Show all information related to license generation.
-#
+# # #
 
 def OutputFull():
     #   Output to console
@@ -355,18 +357,18 @@ def OutputFull():
     print( )
     print( )
 
-#
+# # #
 #   Output > Simple
 #
 #   Only show encrypted license key used in license file.
-#
+# # #
 
 def OutputSimple():
     print( v_license_enc )
 
-#
+# # #
 #   Determine output
-#
+# # #
 
 if __bFlag__ and sys.argv[ 1 ].startswith('-s'):
     OutputSimple()
