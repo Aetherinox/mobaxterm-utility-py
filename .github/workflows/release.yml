@@ -86,7 +86,7 @@ jobs:
 
     job-initialize:
         name: >-
-          📦 Publish › Initialize
+          📦 Initialize
         runs-on: ubuntu-latest
         outputs:
           package_version: ${{ steps.task_initialize_package_version.outputs.PACKAGE_VERSION }}
@@ -188,13 +188,13 @@ jobs:
                 npm run release:generate
 
     # ---------------------------------------------------------------------------------------
-    #   JOBS > BUILD
+    #   JOBS > BUILD > LINUX
     # ---------------------------------------------------------------------------------------
 
     # job-build
     build:
         name: >-
-          🐧 Build Exe (Linux)
+          🐧 Build (Linux)
         runs-on: ubuntu-latest
         needs: [ job-initialize, job-npm ]
         env:
@@ -294,13 +294,12 @@ jobs:
                 echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
 
     # ---------------------------------------------------------------------------------------
-    #   JOBS > BUILD
+    #   JOBS > BUILD > WINDOWS
     # ---------------------------------------------------------------------------------------
 
-    # job-build
     build-windows:
         name: >-
-          🪟 Build Exe (Windows)
+          🪟 Build (Windows)
         runs-on: windows-latest
         needs: [ job-initialize, job-npm ]
         env:
@@ -365,15 +364,16 @@ jobs:
             # ---------------------------------------------------------------------------------------
 
             - name: "🐍 Python › Build"
-              id: build_handle_tarball
+              id: build_handle_exe
               run: |
                 echo "Starting Windows Build: Mobaxterm Utility"
                 mkdir build, tmp
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
-                PACKAGE=$(find build/*.exe -type f -printf "%f\n")
-                echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
+                $exe_name = Get-ChildItem -Filter *.exe -Name
+                echo "PACKAGE_FILENAME=build/$exe_name" >> $env:GITHUB_OUTPUT
+                echo "PACKAGE_EXE=$exe_name" >> $env:GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
             #   List structure
@@ -391,10 +391,14 @@ jobs:
 
             # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
+            #
+            #   PACKAGE_VERSION     : 1.2.0
+            #   PACKAGE_FILENAME    : build/mobaxtgen_cli.exe
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
               id: task_build_debug_print_vals_2
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_exe.outputs.PACKAGE_FILENAME }}"
+                echo "PACKAGE EXE..... .... ${{ steps.build_handle_exe.outputs.PACKAGE_EXE }}"
