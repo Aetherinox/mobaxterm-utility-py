@@ -254,6 +254,7 @@ jobs:
             #   build python script
             #
             #   creates folder 'build'
+            #   temp files placed in 'tnp'
             #   will compile files from 'src' folder
             # ---------------------------------------------------------------------------------------
 
@@ -261,10 +262,9 @@ jobs:
               id: build_handle_tarball
               run: |
                 echo "Starting build: Mobaxterm Utility"
+                mkdir build tmp
 
-                pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build"
-                ls
-                ls build
+                pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
                 PACKAGE=$(find output/*.exe -type f -printf "%f\n")
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
