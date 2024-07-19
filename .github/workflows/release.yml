@@ -266,7 +266,7 @@ jobs:
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
-                PACKAGE=$(find output/*.exe -type f -printf "%f\n")
+                PACKAGE=$(find build/*.exe -type f -printf "%f\n")
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
