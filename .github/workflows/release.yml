@@ -212,6 +212,7 @@ jobs:
             #
             #   exclude folder:
             #       -x test/**\*
+            #       zip -r file.zip package.json README.md LICENSE src -x src/tests/**\*
             # ---------------------------------------------------------------------------------------
 
             - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}.zip )"
@@ -219,7 +220,7 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               run: |
                   echo Building STABLE Package .zip PACKAGE_VERSION
-                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}.zip package.json README.md LICENSE Snippets
+                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md dist
                   ls
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
@@ -229,7 +230,7 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               run: |
                   echo Building PRE-RELEASE Package .zip PACKAGE_VERSION
-                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip package.json README.md LICENSE Snippets
+                  zip -r ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md dist
                   ls
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
