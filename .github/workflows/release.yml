@@ -185,7 +185,7 @@ jobs:
             - name: "🪪 Generate IDs"
               id: task_release_npm_env_generate
               run: |
-                npm run obs:generate
+                npm run release:generate
 
             # ---------------------------------------------------------------------------------------
             #   .ENV > Get
@@ -209,6 +209,9 @@ jobs:
 
             # ---------------------------------------------------------------------------------------
             #   Build Project & Create Zip
+            #
+            #   exclude folder:
+            #       -x test/**\*
             # ---------------------------------------------------------------------------------------
 
             - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}.zip )"
