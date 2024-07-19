@@ -165,7 +165,7 @@ jobs:
             # ---------------------------------------------------------------------------------------
 
             - name: "☑️ Checkout"
-              id: task_release_checkout
+              id: task_npm_checkout
               uses: actions/checkout@v4
               with:
                 fetch-depth: 0
@@ -184,7 +184,7 @@ jobs:
             # ---------------------------------------------------------------------------------------
 
             - name: "🪪 Install Dependencies"
-              id: task_release_npm_install
+              id: task_npm_install
               run: |
                 npm install
 
@@ -193,7 +193,7 @@ jobs:
             # ---------------------------------------------------------------------------------------
 
             - name: "🪪 Generate IDs"
-              id: task_release_npm_env_generate
+              id: task_npm_env_generate
               run: |
                 npm run release:generate
 
@@ -503,6 +503,15 @@ jobs:
               run: |
                 echo "Showing Original Structure"
                 tree
+
+            # ---------------------------------------------------------------------------------------
+            #   Dist Releases > Execute npm generate so that a uuid and guid can be created
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🪪 Generate IDs"
+              id: task_release_npm_env_generate
+              run: |
+                npm run release:generate
 
             # ---------------------------------------------------------------------------------------
             #   .ENV > Get
