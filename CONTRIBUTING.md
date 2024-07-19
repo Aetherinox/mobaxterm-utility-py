@@ -44,21 +44,23 @@ Please review everything on this page before you submit your contribution.
   - [Commiting](#commiting)
   - [Languages](#languages)
     - [Python](#python)
-    - [Indentation](#indentation)
-    - [Line Length](#line-length)
-    - [Blank Lines](#blank-lines)
-    - [Imports](#imports)
-    - [Casing](#casing)
+      - [Indentation](#indentation)
+      - [Line Length](#line-length)
+      - [Blank Lines](#blank-lines)
+      - [Imports](#imports)
+      - [Commenting](#commenting)
+      - [Casing](#casing)
     - [NodeJS - ESLint \& Prettier](#nodejs---eslint--prettier)
+      - [Indentation](#indentation-1)
+      - [Style](#style)
+      - [Line Length](#line-length-1)
       - [Packages](#packages)
       - [Configs](#configs)
         - [ESLint \>= v9 Config](#eslint--v9-config)
         - [ESLint \< v9 Config](#eslint--v9-config-1)
         - [Prettier](#prettier)
-  - [Commenting](#commenting)
-  - [Casing](#casing-1)
-  - [Indentation Style](#indentation-style)
-  - [Spaces Instead Of Tabs](#spaces-instead-of-tabs)
+      - [Commenting](#commenting-1)
+      - [Casing](#casing-1)
 
 <br />
 
@@ -245,7 +247,7 @@ The following guidelines apply to any projects written with Python:
 
 <br />
 
-#### Indentation
+##### Indentation
 Use `4 spaces` per indentation level.
 
 <br />
@@ -268,21 +270,21 @@ Use `4 spaces` per indentation level.
 
 <br />
 
-#### Line Length
-Please try to keep the maximum characters to 80. If you are revising old code which doesn't follow this guideline; please rewrite it to conform.
+##### Line Length
+Keep the maximum character count to 100 per line. If you are revising old code which doesn't follow this guideline; please rewrite it to conform.
 
 <br />
 
-#### Blank Lines
+##### Blank Lines
 Surround top-level functions and class definitions with a blank in-between.
 
 Method definitions inside a class are surrounded by a single blank line.
 
-Extra blank lines may be used (sparingly) to separate groups of related functions. Blank lines may be omitted between a bunch of related one-liners (e.g. a set of dummy implementations).
+Extra blank lines may be used (sparingly) to separate groups of functions related to one another. Blank lines may be omitted between a bunch of related one-liners (e.g: set of dummy implementations).
 
 <br />
 
-#### Imports
+##### Imports
 Imports should usually be on separate lines:
 
 <br />
@@ -313,7 +315,25 @@ The following is ok to do:
 
 <br />
 
-#### Casing
+##### Commenting
+Comment your code. It helps novice readers to better understand the process. It doesn't have to be painfully obvious explanations, but it helps to give an idea of what something does.
+
+Please append `#` to the beginning of each line.
+
+```python
+# #
+#   byteString  :   b'1#Aetherx|232#1#233262#0#0#0#'
+# #
+
+def Encrypt( key : int, byteString : bytes ):
+    res = bytearray( )
+```
+
+<br />
+
+<br />
+
+##### Casing
 - Stick to `snake_case`; unless:
   - naming functions, capitalize the first letter
   - Capitalize enums
@@ -339,12 +359,57 @@ The following is ok to do:
 
 <br />
 
+<br />
+
+<div align="center">
+
+**[`^        back to top        ^`](#about)**
+
+</div>
+
+<br />
+
 ---
 
 <br />
 
 #### NodeJS - ESLint & Prettier
 The following allows you to configure ESLint and Prettier.
+
+<br />
+
+
+##### Indentation
+Use `4 spaces` per indentation level.
+
+<br />
+
+##### Style
+For files that are not controlled by prettier or eslint; use `Allman Style`.  Braces should be on their own lines, and any code inside the braces should be indented 4 spaces.
+
+<br />
+
+```javascript
+return {
+    status: "failure",
+    user:
+    {
+        id: "1aaa35aa-fb3a-62ae-ffec-a14g7fc401ac",
+        label: "Test String",
+    }
+};
+
+while (x == y)
+{
+    foo();
+    bar();
+}
+```
+
+<br />
+
+##### Line Length
+Keep the maximum character count to `100 characters per line`. The configs on this page have prettier automatically set up to detect more than 100 characters per line.
 
 <br />
 
@@ -408,7 +473,7 @@ Pick the config file below depending on which version of ESLint you are using. T
 - [.prettierrc](https://github.com/aetherinox/mobaxterm-utility-py/blob/main/.prettierrc)
 
     ```yml
-    printWidth: 120,
+    printWidth: 100,
     tabWidth: 4,
     useTabs: false,
     semi: false,
@@ -433,27 +498,12 @@ When submitting your pull request, these linting and style rules will be verifie
 
 <br />
 
-### Commenting
-
-Comment your code. If someone else comes along, they should be able to do a quick glance and have an idea of what is going on. Plus it helps novice readers to better understand the process.
+##### Commenting
+Comment your code. It helps novice readers to better understand the process.
 
 You may use block style commenting, or single lines:
 
 ```javascript
-/*
-    make platform writable
-*/
-
-Object.defineProperty(process, 'platform', {
-    value: platform,
-    writable: true
-});
-
-afterEach(() => {
-    process.platform = platform;
-    process.env.OSTYPE = OSTYPE;
-});
-
 /*
     tests to decide if the end-user is running on Darwin or another platform.
 */
@@ -471,37 +521,14 @@ test(`Return false if platform is not Darwin`, () => {
 
 <br />
 
-### Casing
+##### Casing
 
-When writing your code, ensure you stick to `camelCase`
+Stick to `camelCase`
 
 ```javascript
 let myVar = 'one';
 let secondVar = 'two';
 ```
-
-<br />
-
-### Indentation Style
-For files that are not controlled by prettier or eslint; you should be using the `Allman Style`.  This style puts the brace associated with a control statement on the next line, indented. Statements within the braces are indented to the same level as the braces.
-
-<br />
-
-```javascript
-return {
-    status: "failure",
-    user:
-    {
-        id: "1aaa35aa-fb3a-62ae-ffec-a14g7fc401ac",
-        label: "Test String",
-    }
-};
-```
-
-<br />
-
-### Spaces Instead Of Tabs
-When writing your code, set your IDE to utilize **spaces**, with a configured size of `4 characters`. If this project utilizes ESLint, you should find the file `.editorconfig` in the root directory of the repo which defines how the file should be formatted. Load that file into programs such as Visual Studio Code.
 
 <br />
 
