@@ -559,10 +559,10 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               run: |
                   echo Building STABLE ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md dist/${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}/${{ env.PACKAGE_WIN_FILE }}
 
                   echo Building STABLE ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md dist/${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}/${{ env.PACKAGE_LIN_FILE }}
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -571,10 +571,10 @@ jobs:
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               run: |
                   echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-windows-amd64-rc.${{ inputs.VERSION_RC }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md dist/${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}/${{ env.PACKAGE_WIN_FILE }}
 
                   echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-linux-amd64-rc.${{ inputs.VERSION_RC }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md dist/${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}/${{ env.PACKAGE_LIN_FILE }}
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
