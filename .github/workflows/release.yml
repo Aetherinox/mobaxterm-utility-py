@@ -270,6 +270,20 @@ jobs:
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
+            #   List structure
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🐍 Python › List Structure (./Root)"
+              id: build_handle_list_structure_root
+              run: |
+                ls
+
+            - name: "🐍 Python › List Structure (./Build)"
+              id: build_handle_list_structure_build
+              run: |
+                ls build
+
+            # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
             # ---------------------------------------------------------------------------------------
 
