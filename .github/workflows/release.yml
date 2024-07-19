@@ -215,6 +215,16 @@ jobs:
                 fetch-depth: 0
 
             # ---------------------------------------------------------------------------------------
+            #   View passed values
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Passed Values"
+              id: task_build_debug_print_vals_1
+              run: |
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
+
+            # ---------------------------------------------------------------------------------------
             #   Python > Install
             #
             #   development station used v3.12.4
@@ -238,7 +248,6 @@ jobs:
               run: |
                 python -m pip install --upgrade pip
                 pip install pyinstaller==5.3.0
-                pip install --user -e .
 
             # ---------------------------------------------------------------------------------------
             #   build python script
@@ -259,8 +268,8 @@ jobs:
             #   Debug > Print Package Info
             # ---------------------------------------------------------------------------------------
 
-            - name: "👁️‍🗨️ Debug › Print Package Info"
-              id: build_print_package
+            - name: "⚙️ Debug › Print Package Info"
+              id: task_build_debug_print_vals_2
               run: |
                 echo ${{ steps.build_package_version.outputs.PACKAGE_VERSION }}
                 echo ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
