@@ -292,6 +292,10 @@ jobs:
 
             # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
+            #
+            #   PACKAGE_VERSION         : 1.2.0
+            #   PACKAGE_LIN_PATH        : build/mobaxtgen_cli
+            #   PACKAGE_LIN_FILE        : mobaxtgen_cli
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
@@ -308,7 +312,7 @@ jobs:
             - name: "📁 Upload › Artifact"
               uses: actions/upload-artifact@v4
               with:
-                name: linux
+                name: ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}
                 path: build/
 
     # ---------------------------------------------------------------------------------------
@@ -407,16 +411,16 @@ jobs:
             #   Debug : View passed values
             #
             #   PACKAGE_VERSION         : 1.2.0
-            #   PACKAGE_WIN_PATH    : build/mobaxtgen_cli.exe
-            #   PACKAGE_EXE_WIN         : mobaxtgen_cli.exe
+            #   PACKAGE_WIN_PATH        : build/mobaxtgen_cli.exe
+            #   PACKAGE_WIN_FILE        : mobaxtgen_cli.exe
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
               id: task_build_debug_print_vals_2
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_PATH }}"
-                echo "PACKAGE EXE..... .... ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_FILE }}"
+                echo "PACKAGE PATH ........ ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_PATH }}"
+                echo "PACKAGE FILE ........ ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_FILE }}"
 
             # ---------------------------------------------------------------------------------------
             #   Upload Artifact
@@ -425,7 +429,7 @@ jobs:
             - name: "📁 Upload › Artifact"
               uses: actions/upload-artifact@v4
               with:
-                name: windows
+                name: ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}
                 path: build/
 
     # ---------------------------------------------------------------------------------------
@@ -484,9 +488,9 @@ jobs:
             #
             #   📁 ./dist:
             #       📄 mobaxtgen_cli.exe
-            #       📁 linux
+            #       📁 mobaxpy-linux-amd64-v1.2.0
             #           📄 mobaxtgen_cli
-            #       📁 windows
+            #       📁 mobaxpy-windows-amd64-v1.2.0
             #           📄 mobaxtgen_cli.exe
             # ---------------------------------------------------------------------------------------
 
@@ -554,11 +558,11 @@ jobs:
               id: task_release_build_st
               if: ${{ startsWith( inputs.PRERELEASE, false ) }}
               run: |
-                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-windows-amdx64-${{ env.PACKAGE_VERSION }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amdx64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
 
-                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-linux-amdx64-${{ env.PACKAGE_VERSION }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amdx64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
@@ -566,11 +570,11 @@ jobs:
               id: task_release_build_rc
               if: ${{ startsWith( inputs.PRERELEASE, true ) }}
               run: |
-                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-windows-amdx64-rc.${{ inputs.VERSION_RC }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amdx64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-windows-amd64-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
 
-                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-linux-amdx64-rc.${{ inputs.VERSION_RC }}.zip
-                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amdx64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-linux-amd64-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amd64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
