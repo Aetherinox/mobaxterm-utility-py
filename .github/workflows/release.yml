@@ -288,12 +288,7 @@ jobs:
             - name: "🐍 Python › List Structure (./Root)"
               id: build_handle_list_structure_root
               run: |
-                ls
-
-            - name: "🐍 Python › List Structure (./Build)"
-              id: build_handle_list_structure_build
-              run: |
-                ls build
+                tree
 
             # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
@@ -406,12 +401,7 @@ jobs:
             - name: "🐍 Python › List Structure (./Root)"
               id: build_handle_list_structure_root
               run: |
-                ls
-
-            - name: "🐍 Python › List Structure (./Build)"
-              id: build_handle_list_structure_build
-              run: |
-                ls build
+                tree
 
             # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
@@ -482,6 +472,14 @@ jobs:
                 echo "LIN FILE ............ ${{ env.PACKAGE_LIN_FILE }}"
 
             # ---------------------------------------------------------------------------------------
+            #   Clean dist folder since we're getting the files from artifacts
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Clean Dist Folder"
+              run: |
+                rm -rf dist/
+
+            # ---------------------------------------------------------------------------------------
             #   Download Windows & Linux Artifacts
             #
             #   📁 ./dist:
@@ -504,7 +502,6 @@ jobs:
             - name: "⚙️ Debug › Show Cleanup"
               run: |
                 echo "Showing Original Structure"
-                ls -R
                 tree
 
             # ---------------------------------------------------------------------------------------
