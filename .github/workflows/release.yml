@@ -161,13 +161,13 @@ jobs:
                 fetch-depth: 0
 
             # ---------------------------------------------------------------------------------------
-            #   Dist Releases > Print Version Debug
+            #   Debug : View passed values
             # ---------------------------------------------------------------------------------------
 
-            - name: "🪪 Test Next Job Version"
-              id: task_release_debug_print_ver
+            - name: "⚙️ Debug › Passed Values"
+              id: task_npm_debug_print_vals_1
               run: |
-                echo "VERSION: ${{ env.PACKAGE_VERSION }}"
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
 
             # ---------------------------------------------------------------------------------------
             #   Dist Releases > Install package via NPM
@@ -217,7 +217,7 @@ jobs:
                 fetch-depth: 0
 
             # ---------------------------------------------------------------------------------------
-            #   View passed values
+            #   Debug > View passed values
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
@@ -261,7 +261,6 @@ jobs:
               id: build_handle_tarball
               run: |
                 echo "Starting build: Mobaxterm Utility"
-                mkdir build
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build"
 
@@ -269,7 +268,7 @@ jobs:
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
-            #   View passed values
+            #   Debug : View passed values
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
