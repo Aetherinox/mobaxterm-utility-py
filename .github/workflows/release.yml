@@ -200,7 +200,8 @@ jobs:
         env:
           PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
         outputs:
-          package_filename: ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
+          package_lin_path: ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_PATH }}
+          package_lin_file: ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_FILE }}
         steps:
             - name: "✅ Start"
               run: |
@@ -259,16 +260,18 @@ jobs:
             # ---------------------------------------------------------------------------------------
 
             - name: "🐍 Python › Build"
-              id: build_handle_tarball
+              id: build_handle_tar
               run: |
                 echo "Starting Linux Build: Mobaxterm Utility"
                 mkdir build tmp
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
-                PACKAGE=$(find build/mobaxtgen_cli -type f -printf "%f\n")
-                echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
+                PACKAGE_PATH=$(find build/mobaxtgen_cli -type f -printf "%f\n")
+                echo "PACKAGE_LIN_PATH=build/$PACKAGE_PATH" >> $GITHUB_OUTPUT
 
+                PACKAGE_FILE=$(find build/mobaxtgen_cli -type f -printf "%f\n")
+                echo "PACKAGE_LIN_FILE=$PACKAGE_FILE" >> $GITHUB_OUTPUT
             # ---------------------------------------------------------------------------------------
             #   List structure
             # ---------------------------------------------------------------------------------------
@@ -291,7 +294,7 @@ jobs:
               id: task_build_debug_print_vals_2
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_PATH }}"
 
             # ---------------------------------------------------------------------------------------
             #   Upload Artifact
@@ -300,14 +303,14 @@ jobs:
             - name: "📁 Upload › Artifact"
               uses: actions/upload-artifact@v4
               with:
-                name: package-linux
+                name: linux
                 path: build/
 
     # ---------------------------------------------------------------------------------------
     #   JOBS > BUILD > WINDOWS
     # ---------------------------------------------------------------------------------------
 
-    build-windows:
+    job-build-windows:
         name: >-
           🪟 Build (Windows)
         runs-on: windows-latest
@@ -315,7 +318,8 @@ jobs:
         env:
           PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
         outputs:
-          package_filename: ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
+          package_win_path: ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_PATH }}
+          package_win_file: ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_FILE }}
         steps:
             - name: "✅ Start"
               run: |
@@ -382,8 +386,8 @@ jobs:
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
                 $exe_name = Get-ChildItem -Filter build/*.exe -Name
-                echo "PACKAGE_FILENAME=build/$exe_name" >> $env:GITHUB_OUTPUT
-                echo "PACKAGE_EXE=$exe_name" >> $env:GITHUB_OUTPUT
+                echo "PACKAGE_WIN_PATH=build/$exe_name" >> $env:GITHUB_OUTPUT
+                echo "PACKAGE_WIN_FILE=$exe_name" >> $env:GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
             #   List structure
@@ -402,16 +406,17 @@ jobs:
             # ---------------------------------------------------------------------------------------
             #   Debug : View passed values
             #
-            #   PACKAGE_VERSION     : 1.2.0
-            #   PACKAGE_FILENAME    : build/mobaxtgen_cli.exe
+            #   PACKAGE_VERSION         : 1.2.0
+            #   PACKAGE_WIN_PATH    : build/mobaxtgen_cli.exe
+            #   PACKAGE_EXE_WIN         : mobaxtgen_cli.exe
             # ---------------------------------------------------------------------------------------
 
             - name: "⚙️ Debug › Passed Values"
               id: task_build_debug_print_vals_2
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_exe.outputs.PACKAGE_FILENAME }}"
-                echo "PACKAGE EXE..... .... ${{ steps.build_handle_exe.outputs.PACKAGE_EXE }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_PATH }}"
+                echo "PACKAGE EXE..... .... ${{ steps.build_handle_exe.outputs.PACKAGE_WIN_FILE }}"
 
             # ---------------------------------------------------------------------------------------
             #   Upload Artifact
@@ -420,7 +425,7 @@ jobs:
             - name: "📁 Upload › Artifact"
               uses: actions/upload-artifact@v4
               with:
-                name: package-windows
+                name: windows
                 path: build/
 
     # ---------------------------------------------------------------------------------------
@@ -431,9 +436,13 @@ jobs:
         name: >-
           📦 Publish › Release
         runs-on: ubuntu-latest
-        needs: [ job-initialize, job-npm, build, build-windows ]
+        needs: [ job-initialize, job-npm, build, job-build-windows ]
         env:
           PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
+          PACKAGE_WIN_PATH: ${{ needs.job-build-windows.outputs.package_win_path }}
+          PACKAGE_WIN_FILE: ${{ needs.job-build-windows.outputs.package_win_file }}
+          PACKAGE_LIN_PATH: ${{ needs.job-build-windows.outputs.package_lin_path }}
+          PACKAGE_LIN_FILE: ${{ needs.job-build-windows.outputs.package_lin_file }}
         permissions:
             contents: write
             packages: write
@@ -453,13 +462,24 @@ jobs:
             #   Dist Releases > Print Version Debug
             # ---------------------------------------------------------------------------------------
 
-            - name: "🪪 Test Next Job Version"
-              id: task_release_debug_print_ver
+            - name: "⚙️ Debug › Passed Values"
+              id: task_release_debug_print_vals_1
               run: |
-                echo "VERSION: ${{ env.PACKAGE_VERSION }}"
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
+                echo "WIN PATH ............ ${{ env.PACKAGE_WIN_PATH }}"
+                echo "WIN FILE ............ ${{ env.PACKAGE_WIN_FILE }}"
+                echo "LIN PATH ............ ${{ env.PACKAGE_LIN_PATH }}"
+                echo "LIN FILE ............ ${{ env.PACKAGE_LIN_FILE }}"
 
             # ---------------------------------------------------------------------------------------
             #   Download Windows & Linux Artifacts
+            #
+            #   📁 ./dist:
+            #       📄 mobaxtgen_cli.exe
+            #       📁 linux
+            #           📄 mobaxtgen_cli
+            #       📁 windows
+            #           📄 mobaxtgen_cli.exe
             # ---------------------------------------------------------------------------------------
 
             - name: "📁 Download › Saved Artifacts"
@@ -471,5 +491,28 @@ jobs:
             #   Debug > Display Artifacts
             # ---------------------------------------------------------------------------------------
 
-            - name: Display structure of downloaded files
-              run: ls -R
+            - name: "⚙️ Debug › Show Cleanup"
+              run: |
+                echo "Showing Original Structure"
+                ls -R
+                rm /dist/mobaxtgen_cli.exe
+
+            # ---------------------------------------------------------------------------------------
+            #   .ENV > Get
+            #   Get guid and uuid from env variable generated by npm
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🪪 .ENV › Get"
+              id: task_release_dotenv_get
+              uses: falti/dotenv-action@v1
+
+            # ---------------------------------------------------------------------------------------
+            #   .ENV > Print (Debug)
+            #   Show guid and uuid from env variable generated by npm
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🪪 .ENV › Read"
+              id: task_dotenv_debug_print
+              run: |
+                echo "GUID: ${{ steps.task_release_dotenv_get.outputs.GUID }}"
+                echo "UUID: ${{ steps.task_release_dotenv_get.outputs.UUID }}"
