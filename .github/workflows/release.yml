@@ -541,3 +541,43 @@ jobs:
               run: |
                 echo "GUID: ${{ steps.task_release_dotenv_get.outputs.GUID }}"
                 echo "UUID: ${{ steps.task_release_dotenv_get.outputs.UUID }}"
+
+            # ---------------------------------------------------------------------------------------
+            #   Build Project & Create Zip
+            #
+            #   exclude folder:
+            #       -x test/**\*
+            #       zip -r file.zip package.json README.md LICENSE src -x src/tests/**\*
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🔨 Build › Stable ( ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}.zip )"
+              id: task_release_build_st
+              if: ${{ startsWith( inputs.PRERELEASE, false ) }}
+              run: |
+                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-windows-amdx64-${{ env.PACKAGE_VERSION }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amdx64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+
+                  echo Building STABLE ${{ inputs.PLUGIN_NAME }}-linux-amdx64-${{ env.PACKAGE_VERSION }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amdx64-${{ env.PACKAGE_VERSION }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
+
+            - name: "🔨 Build › RC ( ${{ inputs.PLUGIN_NAME }}-${{ env.PACKAGE_VERSION }}-rc.${{ inputs.VERSION_RC }}.zip )"
+              id: task_release_build_rc
+              if: ${{ startsWith( inputs.PRERELEASE, true ) }}
+              run: |
+                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-windows-amdx64-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-windows-amdx64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_WIN_PATH }}
+
+                  echo Building PRE-RELEASE ${{ inputs.PLUGIN_NAME }}-linux-amdx64-rc.${{ inputs.VERSION_RC }}.zip
+                  zip -r ${{ inputs.PLUGIN_NAME }}-linux-amdx64-rc.${{ inputs.VERSION_RC }}.zip README.md LICENSE.md ${{ env.PACKAGE_LIN_PATH }}
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
+
+            # ---------------------------------------------------------------------------------------
+            #   Debug > Display Created ZIPs
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Show ZIPs"
+              run: |
+                tree
