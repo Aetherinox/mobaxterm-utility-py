@@ -224,7 +224,6 @@ jobs:
               id: task_build_debug_print_vals_1
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
 
             # ---------------------------------------------------------------------------------------
             #   Python > Install
@@ -253,25 +252,28 @@ jobs:
 
             # ---------------------------------------------------------------------------------------
             #   build python script
+            #
+            #   creates folder 'build'
+            #   will compile files from 'src' folder
             # ---------------------------------------------------------------------------------------
 
             - name: "🐍 Python › Build"
               id: build_handle_tarball
               run: |
                 echo "Starting build: Mobaxterm Utility"
-                mkdir dist
+                mkdir build
 
-                pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "dist"
+                pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build"
 
-                PACKAGE=$(find dist/*.exe -type f -printf "%f\n")
-                echo "PACKAGE_FILENAME=dist/$PACKAGE" >> $GITHUB_OUTPUT
+                PACKAGE=$(find output/*.exe -type f -printf "%f\n")
+                echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
-            #   Debug > Print Package Info
+            #   View passed values
             # ---------------------------------------------------------------------------------------
 
-            - name: "⚙️ Debug › Print Package Info"
+            - name: "⚙️ Debug › Passed Values"
               id: task_build_debug_print_vals_2
               run: |
-                echo ${{ steps.build_package_version.outputs.PACKAGE_VERSION }}
-                echo ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
