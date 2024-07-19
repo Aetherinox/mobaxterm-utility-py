@@ -263,6 +263,8 @@ jobs:
                 echo "Starting build: Mobaxterm Utility"
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build"
+                ls
+                ls build
 
                 PACKAGE=$(find output/*.exe -type f -printf "%f\n")
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
