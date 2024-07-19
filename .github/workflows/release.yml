@@ -292,3 +292,109 @@ jobs:
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
                 echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
+
+    # ---------------------------------------------------------------------------------------
+    #   JOBS > BUILD
+    # ---------------------------------------------------------------------------------------
+
+    # job-build
+    build-windows:
+        name: >-
+          🔨 Build Exe (Windows)
+        runs-on: windows-latest
+        needs: [ job-initialize, job-npm ]
+        env:
+          PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
+        outputs:
+          package_filename: ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
+        steps:
+            - name: "✅ Start"
+              run: |
+                    echo "Starting build"
+
+            # ---------------------------------------------------------------------------------------
+            #   Job > Build > Checkout
+            # ---------------------------------------------------------------------------------------
+
+            - name: "☑️ Checkout"
+              id: task_build_checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            # ---------------------------------------------------------------------------------------
+            #   Debug > View passed values
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Passed Values"
+              id: task_build_debug_print_vals_1
+              run: |
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
+
+            # ---------------------------------------------------------------------------------------
+            #   Python > Install
+            #
+            #   development station used v3.12.4
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🐍 Python › Setup"
+              id: task_build_python_setup
+              uses: actions/setup-python@v5
+              with:
+                python-version: '3.9'
+
+            # ---------------------------------------------------------------------------------------
+            #   Python > Dependencies
+            #
+            #   development station used v6.3.0
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🐍 Python › Build Tools"
+              id: task_build_python_tools
+              # PyInstaller >=6.0 results in significantly more antivirus false positives
+              run: |
+                python -m pip install --upgrade pip
+                pip install pyinstaller==5.3.0
+
+            # ---------------------------------------------------------------------------------------
+            #   build python script
+            #
+            #   creates folder 'build'
+            #   temp files placed in 'tnp'
+            #   will compile files from 'src' folder
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🐍 Python › Build"
+              id: build_handle_tarball
+              run: |
+                echo "Starting build: Mobaxterm Utility"
+                mkdir build tmp
+
+                pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
+
+                PACKAGE=$(find build/*.exe -type f -printf "%f\n")
+                echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
+
+            # ---------------------------------------------------------------------------------------
+            #   List structure
+            # ---------------------------------------------------------------------------------------
+
+            - name: "🐍 Python › List Structure (./Root)"
+              id: build_handle_list_structure_root
+              run: |
+                ls
+
+            - name: "🐍 Python › List Structure (./Build)"
+              id: build_handle_list_structure_build
+              run: |
+                ls build
+
+            # ---------------------------------------------------------------------------------------
+            #   Debug : View passed values
+            # ---------------------------------------------------------------------------------------
+
+            - name: "⚙️ Debug › Passed Values"
+              id: task_build_debug_print_vals_2
+              run: |
+                echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
+                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}"
