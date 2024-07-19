@@ -579,14 +579,22 @@ jobs:
                 NODE_AUTH_TOKEN: ${{ secrets.ADMINSERV_TOKEN_CL }}
 
             # ---------------------------------------------------------------------------------------
-            #   Upload Artifact
+            #   Upload Artifact > Zip > Windows
             # ---------------------------------------------------------------------------------------
 
-            - name: "📁 Upload › Artifact"
+            - name: "📁 Upload › Artifact (Windows)"
+              uses: actions/upload-artifact@v4
+              with:
+                name: ${{ inputs.PLUGIN_NAME }}-windows-amd64-${{ env.PACKAGE_VERSION }}.zip
+
+            # ---------------------------------------------------------------------------------------
+            #   Upload Artifact > Zip > Linux
+            # ---------------------------------------------------------------------------------------
+
+            - name: "📁 Upload › Artifact (Linux)"
               uses: actions/upload-artifact@v4
               with:
                 name: ${{ inputs.PLUGIN_NAME }}-linux-amd64-${{ env.PACKAGE_VERSION }}.zip
-                path: release/
 
             # ---------------------------------------------------------------------------------------
             #   Debug > Display Created ZIPs
