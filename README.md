@@ -159,10 +159,15 @@ The following parameters can be passed to specify required information the utili
 - Execute the following command in terminal:
 
 ```bash
-pyinstaller -Fwc mobaxtgen_cli.py --version-file="verinfo.py" -i "moba.ico" --distpath "x:\IronPython\3.x.x\dist\mobaxtgen_clu.exe"
+pyinstaller -Fwc mobaxtgen_cli.py --version-file "verinfo.py" -i "moba.ico" --workpath "tmp" --distpath "x:\IronPython\3.x.x\dist\mobaxtgen_cli.exe"
 ```
 
+<br />
+
+> [!WARNING]
 > If you do not add `c` to the list of arguments, the exe will output nothing to console.
+
+<br />
 
 - New .exe will be placed in `x:\IronPython\3.x.x\dist\mobaxtgen_cli.exe`
 
