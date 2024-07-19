@@ -271,7 +271,7 @@ Use `4 spaces` per indentation level.
 <br />
 
 ##### Line Length
-Keep the maximum character count to 100 per line. If you are revising old code which doesn't follow this guideline; please rewrite it to conform.
+Keep the maximum character count to `100 characters per line`. If you are revising old code which doesn't follow this guideline; please rewrite it to conform.
 
 <br />
 
