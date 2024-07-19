@@ -191,8 +191,7 @@ jobs:
     #   JOBS > BUILD > LINUX
     # ---------------------------------------------------------------------------------------
 
-    # job-build
-    build:
+    job-build-linux:
         name: >-
           🐧 Build (Linux)
         runs-on: ubuntu-latest
@@ -294,7 +293,8 @@ jobs:
               id: task_build_debug_print_vals_2
               run: |
                 echo "VERSION ............. ${{ env.PACKAGE_VERSION }}"
-                echo "PACKAGE FILENAME .... ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_PATH }}"
+                echo "PACKAGE PATH ........ ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_PATH }}"
+                echo "PACKAGE FILE ........ ${{ steps.build_handle_tar.outputs.PACKAGE_LIN_FILE }}"
 
             # ---------------------------------------------------------------------------------------
             #   Upload Artifact
@@ -436,13 +436,13 @@ jobs:
         name: >-
           📦 Publish › Release
         runs-on: ubuntu-latest
-        needs: [ job-initialize, job-npm, build, job-build-windows ]
+        needs: [ job-initialize, job-npm, job-build-linux, job-build-windows ]
         env:
           PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
           PACKAGE_WIN_PATH: ${{ needs.job-build-windows.outputs.package_win_path }}
           PACKAGE_WIN_FILE: ${{ needs.job-build-windows.outputs.package_win_file }}
-          PACKAGE_LIN_PATH: ${{ needs.job-build-windows.outputs.package_lin_path }}
-          PACKAGE_LIN_FILE: ${{ needs.job-build-windows.outputs.package_lin_file }}
+          PACKAGE_LIN_PATH: ${{ needs.job-build-linux.outputs.package_lin_path }}
+          PACKAGE_LIN_FILE: ${{ needs.job-build-linux.outputs.package_lin_file }}
         permissions:
             contents: write
             packages: write
@@ -495,7 +495,6 @@ jobs:
               run: |
                 echo "Showing Original Structure"
                 ls -R
-                rm /dist/mobaxtgen_cli.exe
 
             # ---------------------------------------------------------------------------------------
             #   .ENV > Get
