@@ -194,7 +194,7 @@ jobs:
     # job-build
     build:
         name: >-
-          🔨 Build Exe
+          🔨 Build Exe (Linux)
         runs-on: ubuntu-latest
         needs: [ job-initialize, job-npm ]
         env:
@@ -265,11 +265,8 @@ jobs:
                 mkdir build tmp
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
-                ls
-                ls build
-                ls build
-                ls mobaxterm-utility-py
-                PACKAGE=$(find build/*.exe -type f -printf "%f\n")
+
+                PACKAGE=$(find build/mobaxtgen_cli -type f -printf "%f\n")
                 echo "PACKAGE_FILENAME=build/$PACKAGE" >> $GITHUB_OUTPUT
 
             # ---------------------------------------------------------------------------------------
