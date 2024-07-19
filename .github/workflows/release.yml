@@ -371,7 +371,7 @@ jobs:
 
                 pyinstaller -Fwc "src/mobaxtgen_cli.py" --version-file="src/verinfo.py" -i "src/moba.ico" --distpath "build" --workpath "tmp"
 
-                $exe_name = Get-ChildItem -Filter *.exe -Name -Recurse
+                $exe_name = Get-ChildItem -Filter build/*.exe -Name
                 echo "PACKAGE_FILENAME=build/$exe_name" >> $env:GITHUB_OUTPUT
                 echo "PACKAGE_EXE=$exe_name" >> $env:GITHUB_OUTPUT
 
