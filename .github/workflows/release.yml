@@ -197,6 +197,8 @@ jobs:
           🔨 Build Exe
         runs-on: ubuntu-latest
         needs: [ job-initialize, job-npm ]
+        env:
+          PACKAGE_VERSION: ${{ needs.job-initialize.outputs.package_version }}
         outputs:
           package_filename: ${{ steps.build_handle_tarball.outputs.PACKAGE_FILENAME }}
         steps:
