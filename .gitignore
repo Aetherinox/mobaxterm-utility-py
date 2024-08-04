@@ -31,13 +31,6 @@
 !/Tools
 
 # ----------------------------------------
-# [WL]: Dist
-# ----------------------------------------
-!/bin
-!/dist
-!/release
-
-# ----------------------------------------
 # [WL]: Gitignore File
 # ----------------------------------------
 !*.gitignore
@@ -47,6 +40,7 @@
 # ----------------------------------------
 !/docs
 !/assets
+!/pages
 
 # ----------------------------------------
 # [WL]: Source Folder
@@ -54,23 +48,28 @@
 !/src
 !/source
 !/target
+!/lib
+!/notifiers
 
 # ----------------------------------------
 # [WL]: Dist Folder
 # ----------------------------------------
-!/dist
-!/build
+!/bin
+!/release
 
 # ----------------------------------------
 # [WL]: Test Folder
 # ----------------------------------------
 !/Tests
 !/Test
+!/example
+!*playwright.config.js
 
 # ----------------------------------------
-# [WL]: Util Folder
+# [WL]: Util / vendor
 # ----------------------------------------
 !/util
+!/vendor
 
 # ----------------------------------------
 # [WL]: Base Files
@@ -86,9 +85,7 @@
 # ----------------------------------------
 !*package.json
 !*package-lock.json
-!*index.js
-!*release.js
-!*gistr.js
+!*attribution.js
 !*jsconfig.json
 !*postcss.config.js
 !*webpack.config.js
@@ -99,21 +96,31 @@
 !*.md
 !/.github
 !/.gitea
-!*LICENSE
-!*README
-!*CHANGELOG
-!*CONTRIBUTE
-!*CONTRIBUTING
-!*DEPS-LICENSE
+!*LICENSE*
+!*README*
+!*CHANGELOG*
+!*CONTRIBUTE*
+!*CONTRIBUTING*
+!*CODE_OF_CONDUCT*
+!*DEPS-LICENSE*
+!*DECISION_FLOW*
+!*SECURITY*
+!tree*
 !*release-notes
 
 # ----------------------------------------
 # [WL]: Misc
 # ----------------------------------------
+!*.js
+!*.ts
+!*.css
 !*.sh
 !*.tgz
 !*.ico
 !*.conf
+!*.bat
+!*.xml
+!*.html
 
 # ----------------------------------------
 # [WL]: NodeJS > NPM
@@ -121,6 +128,7 @@
 !.nvmrc
 !.nvmrc
 !.node-version
+!.npmignore
 
 # ----------------------------------------
 # [WL]: NodeJS > Babel
@@ -140,6 +148,7 @@
 # ----------------------------------------
 !*.prettierignore
 !*.prettierrc
+!*prettier.config.js
 
 # ----------------------------------------
 # [WL]: NodeJS > Grunt
@@ -149,10 +158,21 @@
 !*Gruntfile*
 
 # ----------------------------------------
+# [WL]: NodeJS > Jest
+# ----------------------------------------
+!*jest.config.js
+
+# ----------------------------------------
+# [WL]: NodeJS > Wrangler
+# ----------------------------------------
+!*wrangler.toml
+
+# ----------------------------------------
 # [WL]: NodeJS > Typescript
 # ----------------------------------------
 !*typescript.js
 !*tsconfig.json
+vitest.workspace.ts
 
 # ----------------------------------------
 # [WL]: NodeJS > Rollup
@@ -164,6 +184,11 @@
 # [WL]: Github > Development Actions
 # ----------------------------------------
 !*action.yml
+
+# ----------------------------------------
+# [WL]: VSC
+# ----------------------------------------
+!*jsconfig.json
 
 # ----------------------------------------
 # [WL]: Signing
