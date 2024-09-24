@@ -64,7 +64,7 @@
         "@stylistic/eslint-plugin-ts": "^2.3.0",
         "@stylistic/eslint-plugin-plus": "^2.3.0",
         "prettier": "^3.3.3",
-        "@rollup/plugin-commonjs": "^26.0.1",
+        "@rollup/plugin-commonjs": "^28.0.0",
         "@rollup/plugin-image": "^3.0.3",
         "@rollup/plugin-node-resolve": "^15.2.3",
         "@rollup/plugin-replace": "^5.0.7",
